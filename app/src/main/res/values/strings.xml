@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SquareRepository</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="repositories">Repositories</string>
+    <string name="fetching_data_from_server">Fetching data from server</string>
+    <string name="retry">Retry</string>
+</resources>
