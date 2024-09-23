@@ -46,7 +46,7 @@ kotlinxCoroutinesTest = "1.7.3"
 hiltAndroidTesting = "2.51.1"
 testRunner = "1.6.2"
 loggingInterceptor = "4.10.0"
-
+ktlint = "12.1.1"
 
 [libraries]
 androidx-paging-testing-android = { module = "androidx.paging:paging-testing-android", version.ref = "pagingTestingAndroid" }
@@ -113,3 +113,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint"}

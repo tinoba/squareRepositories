@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -36,7 +37,7 @@ android {
     buildTypes {
         release {
             isDebuggable = false
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 
@@ -133,14 +134,5 @@ dependencies {
     // Local Tests
     testImplementation(libs.junit)
     testImplementation(libs.truth)
-    testImplementation(libs.androidx.core)
-    testImplementation(libs.androidx.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.mockwebserver)
-    testImplementation(libs.mockk)
-    debugImplementation(libs.ui.test.manifest)
-    testImplementation(libs.turbine)
-
-
-
 }

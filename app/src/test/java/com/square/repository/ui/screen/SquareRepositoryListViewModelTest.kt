@@ -1,6 +1,5 @@
 package com.square.repository.ui.screen
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.testing.TestPager
@@ -22,9 +21,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class SquareRepositoryListViewModelTest {
-
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
