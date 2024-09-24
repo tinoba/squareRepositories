@@ -3,17 +3,20 @@ package com.square.repository.ui.screen
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.testing.TestPager
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.square.MainCoroutineRule
 import com.square.repository.data.FakeServiceImpl
 import com.square.repository.data.network.SquareRepositoryClient
 import com.square.repository.data.network.SquareRepositoryClientImpl
-import com.square.repository.data.network.mapper.ApiMapper
-import com.square.repository.data.network.mapper.ApiMapperImpl
+import com.square.repository.data.network.mapper.RepositoryItemApiMapper
+import com.square.repository.data.network.mapper.RepositoryItemApiMapperImpl
 import com.square.repository.data.repository.SquareRepositoryImpl
 import com.square.repository.data.repository.paging.SquareRepositoryPagingSource
 import com.square.repository.domain.repository.SquareRepository
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -30,15 +33,26 @@ class SquareRepositoryListViewModelTest {
     private lateinit var client: SquareRepositoryClient
     private lateinit var repository: SquareRepository
     private lateinit var apiService: FakeServiceImpl
-    private lateinit var apiMapper: ApiMapper
+    private lateinit var apiMapper: RepositoryItemApiMapper
 
     @Before
     fun setUp() {
         apiService = FakeServiceImpl()
-        apiMapper = ApiMapperImpl()
+        apiMapper = RepositoryItemApiMapperImpl()
         client = SquareRepositoryClientImpl(apiService, apiMapper)
         repository = SquareRepositoryImpl(client)
         viewModel = SquareRepositoryListViewModel(repository)
+    }
+
+    @Test
+    fun testUrlClickRequestsBrowserOpening() = runBlocking {
+        val url = "https://github.com/tino-balint/SquareRepositories"
+        viewModel.openUrl(url)
+
+        mainCoroutineRule.dispatcher.scheduler.advanceUntilIdle()
+        viewModel.openUrlRequest.test {
+            assertEquals(url, awaitItem())
+        }
     }
 
     @Test

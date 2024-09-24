@@ -1,5 +1,6 @@
 package com.square.repository.ui.screen.repository_list.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,16 +19,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withLink
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.square.repository.domain.model.RepositoryItem
 
+@Preview
+@Composable
+fun SquareRepositoryCardPreview() {
+    SquareRepositoryCard(
+        squareRepositoryItem = RepositoryItem(1, "Tino Balint", "https://github.com/tino-balint/SquareRepositories", "description"),
+        {},
+        modifier = Modifier
+    )
+}
+
 @Composable
 fun SquareRepositoryCard(
     squareRepositoryItem: RepositoryItem,
+    onUrlClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -56,32 +71,25 @@ fun SquareRepositoryCard(
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                squareRepositoryItem.description?.let { description ->
-                    Text(
-                        text = description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
+                Text(
+                    text = squareRepositoryItem.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
 
                 Spacer(modifier = Modifier.height(6.dp))
-                Text(buildAnnotatedString {
-                    withLink(
-                        LinkAnnotation.Url(
-                            url = squareRepositoryItem.htmlUrl,
-                            TextLinkStyles(
-                                style = SpanStyle(
-                                    color = MaterialTheme.colorScheme.primary,
-                                    fontSize = 12.sp
-                                )
-                            )
-                        )
-                    ) {
-                        append(squareRepositoryItem.htmlUrl)
+                Text(
+                    text = squareRepositoryItem.htmlUrl,
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 12.sp
+                    ),
+                    modifier = Modifier.clickable {
+                        onUrlClick.invoke(squareRepositoryItem.htmlUrl)
                     }
-                })
+                )
             }
         }
     }

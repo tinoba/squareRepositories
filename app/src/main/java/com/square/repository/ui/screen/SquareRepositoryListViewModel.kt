@@ -7,8 +7,10 @@ import androidx.paging.cachedIn
 import com.square.repository.domain.model.RepositoryItem
 import com.square.repository.domain.repository.SquareRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +21,9 @@ class SquareRepositoryListViewModel @Inject constructor(
 
     private val _repositoryState: MutableStateFlow<PagingData<RepositoryItem>> = MutableStateFlow(value = PagingData.empty())
     val repositoryState: MutableStateFlow<PagingData<RepositoryItem>> get() = _repositoryState
+
+    private val _openUrlRequest: Channel<String> = Channel()
+    val openUrlRequest = _openUrlRequest.receiveAsFlow()
 
     init {
         viewModelScope.launch {
@@ -33,6 +38,12 @@ class SquareRepositoryListViewModel @Inject constructor(
             .collect {
                 _repositoryState.value = it
             }
+    }
+
+    fun openUrl(url: String) {
+        viewModelScope.launch {
+            _openUrlRequest.send(url)
+        }
     }
 
     companion object {
