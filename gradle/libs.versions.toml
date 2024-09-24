@@ -73,6 +73,7 @@ androidx-compose-compiler = { module = "androidx.compose.compiler:compiler", ver
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3"}
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui"}
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview"}
+androidx-compose-ui-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling"}
 androidx-compose-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTesting" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
